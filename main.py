@@ -74,25 +74,57 @@ class Library:
             self.members.append(member)
 
     def issue_book(self, member_id, isbn):
+        found_member = None
         for member in self.members:  # searching for member in members list
             if member.member_id == member_id:
-                for book in self.books:  # searching for book in books list
-                    if book.isbn == isbn:
-                        member.borrow_book(book)
-                        break
-                else:
-                    print(f'there were no books with ISBN {isbn} found!')
+                found_member = member
+                break
         else:
             print(f'there were no members with ID {member_id} found!')
 
+        if found_member is not None:
+            for book in self.books:  # searching for book in books list
+                if book.isbn == isbn:
+                    found_member.borrow_book(book)
+                    break
+            else:
+                print(f'there were no books with ISBN {isbn} found!')
+
     def return_book(self, member_id, isbn):
+        found_member = None
         for member in self.members:  # searching for member in members list
             if member.member_id == member_id:
-                for book in self.books:  # searching for book in books list
-                    if book.isbn == isbn:
-                        member.return_book(book)
-                        break
-                else:
-                    print(f'there were no books with ISBN {isbn} found!')
+                found_member = member
+                break
         else:
             print(f'there were no members with ID {member_id} found!')
+
+        if found_member is not None:
+            for book in self.books:  # searching for book in books list
+                if book.isbn == isbn:
+                    found_member.return_book(book)
+                    break
+            else:
+                print(f'there were no books with ISBN {isbn} found!')
+
+
+# creating the books
+book1 = Book("1984", "George Orwell", "1234567890")
+book2 = Book("To Kill a Mockingbird", "Harper Lee", "0987654321")
+
+# creating the library and adding the books to it
+library = Library()
+library.add_book(book1)
+library.add_book(book2)
+
+# registering a member
+member = Member("Alice", "M001")
+library.register_member(member)
+
+# borrowing a book to the member
+library.issue_book("M001", "1234567890")
+
+# returning the book
+library.return_book("M001", "1234567890")
+
+# GitHub repository: https://github.com/jewelmoradi/djangoCourse_assignment3
